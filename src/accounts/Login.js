@@ -22,16 +22,16 @@ function Login(){
     }
 
     const login = () => {
-        console.log(state)
+        console.log(state, localStorage)
     }
 
     const signup = () => {
-        console.log(state)
+        console.log(state, localStorage)
     }
 
     return(
         <View>
-            <Text>Login:</Text>
+            <Text>Signup/Login to get Started</Text>
 
             <Text>Gamertag</Text>
             <TextInput name ="username" id="username" placeholder="Gamertag" onChangeText={(value)=>handleUsername(value)}/>
@@ -39,11 +39,11 @@ function Login(){
             <Text>Password</Text>
             <TextInput name ="password" secureTextEntry={true} id="password" placeholder="Password" onChangeText={(value)=>handlePassword(value)}/>
 
-            <TouchableOpacity onPress={login}>
+            <TouchableOpacity onPress={login} className="button">
                 <Text>Login</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={signup}>
+            <TouchableOpacity onPress={signup} className="button">
                 <Text>Signup</Text>
             </TouchableOpacity>
         </View>

@@ -6,8 +6,7 @@ import Signup from '../accounts/Signup';
 export default function Home(){
     return (
         <View>
-            <Text>Signup/Login to get Started!</Text>
-            <Login/>
+            {localStorage.token ? <Text>Welcome back User!</Text> : <Login/>}
         </View>
     )
 }
