@@ -1,28 +1,51 @@
 import React, {Component} from 'react';
-import {useState} from 'react';
-import { Text, View, Input } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 function Login(){
-    const [state, setState] = useState({
+    const [state, setState] = React.useState({
         username : "",
         password : ""
     })
-    const handleChange = (e) => {
-        const {id , value} = e.target   
-        setState(prevState => ({
-            ...prevState,
-            [id] : value
-        }))
+    const handleUsername = (input) => {
+        console.log(input)
+        setState({
+            ...state,
+            username: input
+        })
     }
+    const handlePassword = (input) => {
+        console.log(input)
+        setState({
+            ...state,
+            password: input
+        })
+    }
+
+    const login = () => {
+        console.log(state)
+    }
+
+    const signup = () => {
+        console.log(state)
+    }
+
     return(
         <View>
             <Text>Login:</Text>
 
             <Text>Gamertag</Text>
-            <Input name ="username" placeholder="Gamertag" value={state.username} onChange={handleChange}/>
+            <TextInput name ="username" id="username" placeholder="Gamertag" onChangeText={(value)=>handleUsername(value)}/>
 
             <Text>Password</Text>
-            <Input name ="password" placeholder="Password" value={state.password} onChange={handleChange}/>
+            <TextInput name ="password" secureTextEntry={true} id="password" placeholder="Password" onChangeText={(value)=>handlePassword(value)}/>
+
+            <TouchableOpacity onPress={login}>
+                <Text>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={signup}>
+                <Text>Signup</Text>
+            </TouchableOpacity>
         </View>
     )
 }

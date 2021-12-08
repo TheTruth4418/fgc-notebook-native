@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {useState} from 'react';
-import { Text, View,Input } from 'react-native';
+import { Text, View,TextInput, StyleSheet } from 'react-native';
 
 function Signup(){
     const [state, setState] = useState({
@@ -19,12 +19,21 @@ function Signup(){
             <Text>Signup:</Text>
 
             <Text>Gamertag</Text>
-            <Input name ="username" placeholder="Gamertag" value={state.username} onChange={handleChange}/>
+            <TextInput style={styles.input} name ="username" placeholder="Gamertag" value={state.username} onChange={handleChange}/>
 
             <Text>Password</Text>
-            <Input name ="password" placeholder="Password" value={state.password} onChange={handleChange}/>
+            <TextInput style={styles.input} name ="password" placeholder="Password" value={state.password} onChange={handleChange}/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    input:{
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    }
+})
 
 export default Signup
