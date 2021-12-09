@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 function Login(props){
     const [state, setState] = React.useState({
         username : "",
-        password : ""
+        password : "",
+        email: ""
     })
 
     const handleUsername = (input) => {
@@ -16,11 +17,20 @@ function Login(props){
             username: input
         })
     }
+
     const handlePassword = (input) => {
         console.log(input)
         setState({
             ...state,
             password: input
+        })
+    }
+
+    const handleEmail = (input) => {
+        console.log(input)
+        setState({
+            ...state,
+            email: input
         })
     }
 
@@ -35,6 +45,9 @@ function Login(props){
     return(
         <View>
             <Text>Signup/Login to get Started</Text>
+
+            <Text>Email (Not required for exsisting users)</Text>
+            <TextInput name ="email" id="email" placeholder="Email" onChangeText={(value)=>handleEmail(value)}/>
 
             <Text>Gamertag</Text>
             <TextInput name ="username" id="username" placeholder="Gamertag" onChangeText={(value)=>handleUsername(value)}/>

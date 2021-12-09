@@ -17,11 +17,15 @@ export const postSignup = userObj => {
       })
         .then(resp => resp.json())
         .then(data => {
-          console.log(data)
-          dispatch({
-            type: "LOGIN_USER",
-            payload: data
-          })
+          if (data.message){
+            alert(data.message)
+          } else {
+            localStorage.setItem("token", data.jwt)
+            dispatch({
+              type: "LOGIN_USER",
+              payload: data
+            })
+          }
         })
     }
   }
