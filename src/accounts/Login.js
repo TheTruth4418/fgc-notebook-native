@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import { postLogin } from '../redux/actions';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-function Login(){
+function Login(props){
     const [state, setState] = React.useState({
         username : "",
         password : ""
     })
+
     const handleUsername = (input) => {
         console.log(input)
         setState({
@@ -22,7 +25,7 @@ function Login(){
     }
 
     const login = () => {
-        console.log(state, localStorage)
+        props.postLogin(state)
     }
 
     const signup = () => {
@@ -50,4 +53,10 @@ function Login(){
     )
 }
 
-export default Login
+const MDTP = dispatch => {
+    return {
+        postLogin: (state) => dispatch(postLogin(state))
+    }
+} 
+
+export default connect(null, MDTP)(Login);
