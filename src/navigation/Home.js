@@ -4,8 +4,13 @@ import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import Signup from '../accounts/Signup';
 import { logoutUser } from '../redux/actions';
+import { fetchUser } from '../redux/actions';
+import { useEffect } from 'react';
 
 function Home(props){
+    useEffect(() => {
+        props.fetchUser()
+      }, []);
     return (
         <View>
             {props.currentUser ? <> 
@@ -27,7 +32,8 @@ const MDTP = dispatch => {
         logoutUser: () => {
             localStorage.clear()
             dispatch(logoutUser())
-        }
+        },
+        fetchUser: () => { dispatch(fetchUser()) }
     }
 } 
 
