@@ -9,6 +9,10 @@ const initialState = {
                 ...state,
                 user: action.payload
             }
+        case "LOGOUT_USER":
+            return{
+                state: initialState
+            }
         default :
             return state
     }
