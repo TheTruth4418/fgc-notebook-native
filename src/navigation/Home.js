@@ -14,7 +14,7 @@ function Home(props){
     return (
         <View>
             {props.currentUser ? <> 
-                <Text>Welcome back User!</Text>
+                <Text>Welcome back {props.currentUser.username}!</Text>
                 <Button title="Logout" onPress={props.logoutUser} /> </> : <Login/>}
 
         </View>

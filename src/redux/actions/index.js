@@ -19,7 +19,7 @@
             localStorage.setItem("token", data.jwt)
             dispatch({
               type: "LOGIN_USER",
-              payload: data
+              payload: data.user
             })
           }
         })
@@ -73,12 +73,8 @@
           if (data.message) {
             alert(data.message)
           } else {
-            console.log(data)
             localStorage.setItem("token", data.jwt)
-            dispatch({
-              type: "LOGIN_USER",
-              payload: data.user
-            })
+            dispatch(fetchUser())
           }
         })
     }
