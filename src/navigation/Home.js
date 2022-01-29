@@ -1,11 +1,8 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import { Text, View, Button } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
-import Signup from '../accounts/Signup';
-import { logoutUser } from '../redux/actions';
-import { fetchUser } from '../redux/actions';
-import { useEffect } from 'react';
+import { logoutUser,fetchUser } from '../redux/actions';
 
 function Home(props){
     useEffect(() => {
