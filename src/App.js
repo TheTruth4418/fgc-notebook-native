@@ -3,9 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import store from './redux/store'
 import { Provider } from 'react-redux';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './navigation/Home';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Stack = createStackNavigator();
 

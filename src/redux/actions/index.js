@@ -1,31 +1,33 @@
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Login/Logout actions
 
   export const fetchUser = () => {
     return dispatch => {
-      const token = localStorage.token;
-      if (token) {
-        return fetch("http://localhost:3000/user", {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        })
-          .then(resp => resp.json())
-          .then(data => {
-            if (data.message) {
-              localStorage.clear()
-            } else {
-              dispatch({
-                type: "LOGIN_USER",
-                payload: data.user
-              })
+      const token = AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          return fetch("http://localhost:3000/user", {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              'Authorization': `Bearer ${token}`
             }
           })
-      }
+            .then(resp => resp.json())
+            .then(data => {
+              if (data.message) {
+                AsyncStorage.clear()
+              } else {
+                dispatch({
+                  type: "LOGIN_USER",
+                  payload: data.user
+                })
+              }
+            })
+        }
+      })
     }
   }
 
@@ -49,7 +51,7 @@
           if (data.message){
             alert(data.message)
           } else {
-            localStorage.setItem("token", data.jwt)
+            AsyncStorage.setItem("token", data.jwt)
             dispatch({
               type: "LOGIN_USER",
               payload: data.user
@@ -75,7 +77,7 @@
           if (data.message) {
             alert(data.message)
           } else {
-            localStorage.setItem("token", data.jwt)
+            AsyncStorage.setItem("token", data.jwt)
             dispatch(fetchUser())
           }
         })

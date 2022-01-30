@@ -3,6 +3,7 @@ import { Text, View, Button } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import { logoutUser,fetchUser } from '../redux/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function Home(props){
@@ -27,7 +28,7 @@ const MSTP = state => {
 const MDTP = dispatch => {
     return {
         logoutUser: () => {
-            localStorage.clear()
+            AsyncStorage.clear()
             dispatch(logoutUser())
         },
         fetchUser: () => { dispatch(fetchUser()) }
