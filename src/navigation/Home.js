@@ -4,6 +4,7 @@ import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import { logoutUser,fetchUser } from '../redux/actions';
 
+
 function Home(props){
     useEffect(() => {
         props.fetchUser()
@@ -13,7 +14,6 @@ function Home(props){
             {props.currentUser ? <> 
                 <Text>Welcome back {props.currentUser.username}!</Text>
                 <Button title="Logout" onPress={props.logoutUser} /> </> : <Login/>}
-
         </View>
     )
 }
