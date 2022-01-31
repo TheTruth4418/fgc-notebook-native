@@ -16,11 +16,17 @@ function Home(props){
       const [state, setState] = React.useState({ game : 0 })
 
       const createPress = () => {
-        props.navigation.navigate('Create')
+        props.navigation.navigate('Create',{
+            gameId: state.game,
+            game: props.games[state.game]
+        })
       }
 
       const viewPress = () => {
-        props.navigation.navigate('View')
+        props.navigation.navigate('View', {
+            gameId: state.game,
+            game: props.games[state.game]
+        })
       }
 
       const nextGame = () => {
@@ -35,7 +41,7 @@ function Home(props){
         let arr = []
         Object.keys(props.games).forEach(game => {
             arr.push(<View key={game}>
-                <Text >{game}</Text>
+                <Text>{game}</Text>
                 <TouchableOpacity onPress={createPress}>
                     <Text >CREATE NOTES</Text>
                 </TouchableOpacity>
