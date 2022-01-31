@@ -5,7 +5,6 @@ import React from 'react';
 function ViewNotes(props){
     let gameId = props.route.params.gameId
     let game = Object.keys(props.games)[gameId]
-    console.log(props)
     return (
         <View>
             <Text>{`View mode for ${game}`}</Text>

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 function CreateNote(props){
     let gameId = props.route.params.gameId
     let game = Object.keys(props.games)[gameId]
-    console.log(props)
     return (
         <View>
             <Text>{`Create mode for ${game}`}</Text>
