@@ -2,14 +2,14 @@ import React, {useEffect} from 'react';
 import { Text, View, Button, Pressable, TouchableOpacity } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
-import { logoutUser,fetchUser } from '../redux/actions';
+import { logoutUser,fetchUser,fetchGames } from '../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 function Home(props){
     useEffect(() => {
-        props.fetchUser()
+        props.fetchUser();
       }, []);
 
       const createPress = () => {
@@ -19,10 +19,25 @@ function Home(props){
       const viewPress = () => {
         props.navigation.navigate('View')
       }
+
+    const gamesList = () => {
+        let arr = []
+        Object.keys(props.games).forEach(game => {
+            arr.push(<Text key={game}>{game}</Text>)
+        })
+        return(
+            <>
+                <Text>Choose Your Destiny.</Text>
+                {arr}
+            </>
+        )
+    }
+
     return (
         <View>
             {props.currentUser ? <> 
                 <Text>Welcome back {props.currentUser.username}!</Text>
+                {props.games ? gamesList() : <Text> Loading Games.... </Text>}
                 <TouchableOpacity onPress={createPress} >
                     <Text>CREATE NOTES</Text>
                 </TouchableOpacity>
@@ -36,7 +51,8 @@ function Home(props){
 
 const MSTP = state => {
     return {
-        currentUser: state.user
+        currentUser: state.user,
+        games: state.games
     }
 }
 
@@ -46,7 +62,8 @@ const MDTP = dispatch => {
             AsyncStorage.clear()
             dispatch(logoutUser())
         },
-        fetchUser: () => { dispatch(fetchUser()) }
+        fetchUser: () => { dispatch(fetchUser()) },
+        fetchGames: () => {dispatch(fetchGames())}
     }
 } 
 

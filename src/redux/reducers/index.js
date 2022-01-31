@@ -13,6 +13,12 @@ const initialState = {
             return{
                 state: initialState
             }
+        case "FETCH_GAMES":{
+            return {
+                ...state,
+                games: action.payload
+            }
+        }
         default :
             return state
     }

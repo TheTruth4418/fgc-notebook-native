@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
                   type: "LOGIN_USER",
                   payload: data.user
                 })
+                dispatch(fetchGames())
               }
             })
         }
@@ -56,6 +57,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
               type: "LOGIN_USER",
               payload: data.user
             })
+            dispatch(fetchGames())
           }
         })
     }
@@ -85,3 +87,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
   }
 
   // Load up Form data for the games
+
+  export const fetchGames = () => {
+    return dispatch => {
+      const token = AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          return fetch("http://localhost:3000/characters", {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          })
+            .then(resp => resp.json())
+            .then(data => {
+              if (data.message) {
+                AsyncStorage.clear()
+              } else {
+                console.log(data)
+                dispatch({
+                  type: "FETCH_GAMES",
+                  payload: data
+                })
+              }
+            })
+        }
+      })
+    }
+  }
