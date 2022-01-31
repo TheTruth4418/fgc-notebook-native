@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-function viewNotes(){
+function ViewNotes(){
     return (
         <View>
-            <Text>Create mode</Text>
+            <Text>View mode</Text>
         </View>
     )
 }
 
-export default viewNotes;
+export default ViewNotes;

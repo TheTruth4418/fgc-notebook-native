@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-function createNote(){
+function CreateNote(){
     return (
         <View>
             <Text>Create mode</Text>
@@ -8,4 +9,4 @@ function createNote(){
     )
 }
 
-export default createNote;
+export default CreateNote;
