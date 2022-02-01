@@ -142,3 +142,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
     }
   }
   // Matchup Note Actions
+
+  export const postMuNote = (noteObj) => {
+    console.log(noteObj)
+    return (dispatch) => {
+      AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          return fetch('http://localhost:3000/matchup_notes/new', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }, body: JSON.stringify({noteObj}),
+            }).then(resp => resp.json())
+              .then(data => {
+                  alert(data.message)
+                  console.log(data)
+              })
+        }
+      })
+    }
+  }

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,TextInput } from 'react-native';
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { Picker, TouchableOpacity } from 'react-native-web';
-import { postCharNote } from '../redux/actions';
+import { postCharNote, postMuNote } from '../redux/actions';
 
 function CreateNote(props){
     let gameId = props.route.params.gameId
@@ -63,7 +63,7 @@ function CreateNote(props){
     }
 
     const handleSubmit = () => {
-        state.form === "Character" ? props.postCharNote(state) : alert("submitted mu form")
+        state.form === "Character" ? props.postCharNote(state) : props.postMuNote(state)
     }
 
     return (
@@ -97,7 +97,8 @@ const MSTP = state => {
 
 const MDTP = dispatch => {
     return {
-        postCharNote: (state) => dispatch(postCharNote(state))
+        postCharNote: (state) => dispatch(postCharNote(state)),
+        postMuNote: (state) => dispatch(postMuNote(state))
     }
 } 
 
