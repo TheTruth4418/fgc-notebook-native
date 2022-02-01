@@ -1,13 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,TextInput } from 'react-native';
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import { Picker } from 'react-native-web';
+import { Picker, TouchableOpacity } from 'react-native-web';
+import { postCharNote } from '../redux/actions';
 
 function CreateNote(props){
     let gameId = props.route.params.gameId
     let game = Object.keys(props.games)[gameId]
     const characters = Object.keys(props.games[game])
-    const [selectedCharacter, setSelectedCharacter] = useState();
+    const [state, setState] = React.useState({
+        game: game,
+        form: "Character",
+        character: "",
+        opponent: "",
+        title: ""
+    });
 
     const charsForm = () => {
         let arr = [];
@@ -17,16 +24,67 @@ function CreateNote(props){
         return(arr)
     }
 
-    return (
-        <View>
-            <Text>{`Create mode for ${game}`}</Text>
-            <Picker
-                    selectedValue={selectedCharacter}
+    const formSwitcher = () => {
+        const modes = ['Character', 'Matchup']
+        let switchForms = () => {
+            state.form === modes[0] ? setState({ ...state, form: modes[1], opponent: "" }) : setState({ ...state, form: modes[0], opponent: "" }) 
+        }
+        return (
+            <>
+                <TouchableOpacity onPress={switchForms}>
+                    <Text>{`Switch to ${state.form === modes[0] ? modes[1]: modes[0] } form`}</Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    const handleNote = (input) => {
+        setState({
+            ...state,
+            title: input
+        })
+    }
+
+    const muForm = () => {
+        return (
+            <>
+                <Picker
+                    selectedValue={state.opponent}
                     onValueChange={(char, charIndex) =>
-                        setSelectedCharacter(char)
+                        setState({
+                            ...state,
+                            opponent: char
+                        })
                 }>
                 {charsForm()}
             </Picker>
+            </>
+        )
+    }
+
+    const handleSubmit = () => {
+        state.form === "Character" ? props.postCharNote(state) : alert("submitted mu form")
+    }
+
+    return (
+        <View>
+            <Text>{`Create mode for ${game}`}</Text>
+            {formSwitcher()}
+            <Picker
+                    selectedValue={state.character}
+                    onValueChange={(char, charIndex) =>
+                        setState({
+                            ...state,
+                            character: char
+                        })
+                }>
+                {charsForm()}
+            </Picker>
+            {state.form === "Matchup" ? muForm() : null }
+            <TextInput name ="note" id="note" placeholder="Type Note here!" onChangeText={(value)=>handleNote(value)}/>
+            <TouchableOpacity onPress={handleSubmit}>
+                <Text>Submit!</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -37,4 +95,10 @@ const MSTP = state => {
     }
 }
 
-export default connect(MSTP)(CreateNote)
+const MDTP = dispatch => {
+    return {
+        postCharNote: (state) => dispatch(postCharNote(state))
+    }
+} 
+
+export default connect(MSTP, MDTP)(CreateNote)

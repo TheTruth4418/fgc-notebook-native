@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
   export const fetchUser = () => {
     return dispatch => {
-      const token = AsyncStorage.getItem('token')
+      AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
           return fetch("http://localhost:3000/user", {
@@ -90,7 +90,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
   export const fetchGames = () => {
     return dispatch => {
-      const token = AsyncStorage.getItem('token')
+      AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
           return fetch("http://localhost:3000/characters", {
@@ -117,3 +117,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       })
     }
   }
+
+  // Character Note Actions
+  export const postCharNote = (noteObj) => {
+    console.log(noteObj)
+    return (dispatch) => {
+      AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          return fetch('http://localhost:3000/character_notes/new', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }, body: JSON.stringify({noteObj}),
+            }).then(resp => resp.json())
+              .then(data => {
+                  alert(data.message)
+                  console.log(data)
+              })
+        }
+      })
+    }
+  }
+  // Matchup Note Actions
