@@ -2,7 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import React, {useState, useEffect} from 'react';
 import { Picker } from 'react-native-web';
-import Viewer from '../viewing/viewer';
+import CharNoteViewer from '../viewing/charNoteViewer';
+import MuNoteViewer from '../viewing/muNoteViewer'
 import { fetchCharNotes, fetchMuNotes, refreshCurrentNote } from '../redux/actions';
 
 function ViewNotes(props){
@@ -11,7 +12,9 @@ function ViewNotes(props){
     const characters = Object.keys(props.games[game])
 
     useEffect(() => {
-        props.refreshCurrentNote();
+        if(props.note){
+            props.refreshCurrentNote();
+        }
       }, []);
 
     const [state, setState] = React.useState({
@@ -31,9 +34,9 @@ function ViewNotes(props){
     }
 
     const formSwitcher = () => {
-        props.refreshCurrentNote();
         const modes = ['Character', 'Matchup']
         let switchForms = () => {
+            props.refreshCurrentNote()
             state.form === modes[0] ? setState({ ...state, form: modes[1], character: "", opponent: "" }) : setState({ ...state, form: modes[0], character:"", opponent: "" }) 
         }
         return (
@@ -82,6 +85,14 @@ function ViewNotes(props){
         }
     }
 
+    const renderNotes = () => {
+        if(state.form === "Character"){
+            return (<CharNoteViewer data={state} />)
+        } else {
+            return (<MuNoteViewer data={state}/>)
+        }
+    }
+
     return (
         <View>
             <Text>{`View mode for ${game}`}</Text>
@@ -97,7 +108,7 @@ function ViewNotes(props){
                 {charsForm()}
             </Picker>
             {state.form === "Matchup" ? muForm() : null }
-            <Text>Data</Text>
+            {props.note ? renderNotes() : <Text>Select Character(s) to get started!</Text>}
         </View>
     )
 }
@@ -105,7 +116,8 @@ function ViewNotes(props){
 
 const MSTP = state => {
     return {
-        games: state.games
+        games: state.games,
+        note: state.current_note
     }
 }
 
