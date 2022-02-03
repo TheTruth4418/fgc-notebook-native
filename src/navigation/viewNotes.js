@@ -1,12 +1,18 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Picker } from 'react-native-web';
+import Viewer from '../viewing/viewer';
+import { fetchCharNotes, fetchMuNotes, refreshCurrentNote } from '../redux/actions';
 
 function ViewNotes(props){
     let gameId = props.route.params.gameId
     let game = Object.keys(props.games)[gameId]
     const characters = Object.keys(props.games[game])
+
+    useEffect(() => {
+        props.refreshCurrentNote();
+      }, []);
 
     const [state, setState] = React.useState({
         game: game,
@@ -25,6 +31,7 @@ function ViewNotes(props){
     }
 
     const formSwitcher = () => {
+        props.refreshCurrentNote();
         const modes = ['Character', 'Matchup']
         let switchForms = () => {
             state.form === modes[0] ? setState({ ...state, form: modes[1], character: "", opponent: "" }) : setState({ ...state, form: modes[0], character:"", opponent: "" }) 
@@ -44,10 +51,10 @@ function ViewNotes(props){
                 <Picker
                     selectedValue={state.opponent}
                     onValueChange={(char, charIndex) =>
-                        setState({
-                            ...state,
-                            opponent: char
-                        })
+                        {
+                            setState({...state, opponent: char})
+                            onOppChange({...state, opponent: char})
+                        }
                 }>
                 {charsForm()}
             </Picker>
@@ -55,7 +62,25 @@ function ViewNotes(props){
         )
     }
 
-    console.log(state)
+    const muNoteReq = (data) => {
+        props.fetchMuNotes(data)
+    }
+
+    const onCharChange = (data) => {
+        if(state.form === "Character"){
+            props.fetchCharNotes(data)
+        } else if(state.opponent != ""){
+            muNoteReq(data)
+        } else {
+            null
+        }
+    }
+
+    const onOppChange = (data) => {
+        if(state.character != ""){
+            muNoteReq(data)
+        }
+    }
 
     return (
         <View>
@@ -63,12 +88,16 @@ function ViewNotes(props){
             {formSwitcher()}
             <Picker
                     selectedValue={state.character}
-                    onValueChange={(char, charIndex) =>
-                        setState({ ...state, character: char })
+                    onValueChange={(char, charIndex) =>{
+                        setState({...state, character: char})
+                        onCharChange({...state, character:char})
+                    }
+
                 }>
                 {charsForm()}
             </Picker>
             {state.form === "Matchup" ? muForm() : null }
+            <Text>Data</Text>
         </View>
     )
 }
@@ -80,4 +109,12 @@ const MSTP = state => {
     }
 }
 
-export default connect(MSTP)(ViewNotes)
+const MDTP = dispatch => {
+    return {
+        fetchCharNotes: (data) => dispatch(fetchCharNotes(data)),
+        fetchMuNotes: (data) => dispatch(fetchMuNotes(data)),
+        refreshCurrentNote: () => dispatch(refreshCurrentNote())
+    }
+}
+
+export default connect(MSTP, MDTP)(ViewNotes)

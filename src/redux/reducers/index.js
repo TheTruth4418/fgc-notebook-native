@@ -19,6 +19,21 @@ const initialState = {
                 games: action.payload
             }
         }
+        case "FETCH_CHAR_NOTES":
+            return {
+                ...state,
+                current_note: action.payload
+            }
+        case "FETCH_MU_NOTES":
+            return {
+                ...state,
+                current_note: action.payload
+            }
+        case "REFRESH_CURRENT_NOTE":
+            return {
+                ...state,
+                current_note: undefined
+            }
         default :
             return state
     }

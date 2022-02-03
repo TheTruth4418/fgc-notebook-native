@@ -120,7 +120,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
   // Character Note Actions
   export const postCharNote = (noteObj) => {
-    console.log(noteObj)
     return (dispatch) => {
       AsyncStorage.getItem('token')
       .then((token) => {
@@ -141,6 +140,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       })
     }
   }
+
+  export const fetchCharNotes = (obj) => {
+    console.log(obj)
+    return dispatch => {
+      AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          return fetch(`http://localhost:3000/${obj.game}/${obj.character}/notes`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            }).then(resp => resp.json())
+              .then(data => {
+                dispatch({
+                    type: "FETCH_CHAR_NOTES",
+                    payload: data
+                })
+              })
+        }
+      })
+    }
+  }
+  
   // Matchup Note Actions
 
   export const postMuNote = (noteObj) => {
@@ -164,4 +189,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
         }
       })
     }
+  }
+
+  export const fetchMuNotes = (data) => {
+    return (dispatch) => {
+      AsyncStorage.getItem('token')
+      .then((token) => {
+        if(token){
+          fetch(`http://localhost:3000/${data.game}/${data.character}/${data.opponent}/notes`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            }).then(resp => resp.json())
+              .then(data => {
+                dispatch({
+                    type: "FETCH_MU_NOTES",
+                    payload: data
+                })
+              })
+        }
+      })
+    }
+  }
+
+  export const refreshCurrentNote = () => {
+      return {
+          type: "REFRESH_CURRENT_NOTE"
+      }
   }
