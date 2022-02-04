@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import { Text, View, Button, Pressable, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { noteCards } from './noteCards';
+import NoteCards from './noteCards';
 
 function MuNote(props){
     const data = props.data
     return (
         <>
-            {noteCards(props.note)}
+            <NoteCards data={props.data} type="mu"/>
         </>
     )
 }

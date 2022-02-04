@@ -220,3 +220,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
           type: "REFRESH_CURRENT_NOTE"
       }
   }
+
+  //Bullet Point Actions
+
+export const postBulletPoint = (pointObj, currentNote) => {
+  return dispatch => {
+    AsyncStorage.getItem('token')
+    .then((token) => {
+      if (token) {
+        fetch('http://localhost:3000/bullet_points/new', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }, body: JSON.stringify({pointObj}),
+            }).then(resp => resp.json())
+              .then(data => {
+                  alert(data.message)
+                  pointObj.type === "char" ?  dispatch(fetchCharNotes(currentNote)) : dispatch(fetchMuNotes(currentNote))
+              })
+      }
+    })
+  }
+}
