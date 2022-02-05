@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import { deletePoint } from '../redux/actions';
-import { Text, View, TextInput, TouchableOpacity, TouchableOpacityComponent } from 'react-native';
+import React from 'react';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 

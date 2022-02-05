@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import { postEditedBulletPoint } from '../redux/actions';
+import React from 'react';
 import { Text, View, TextInput, TouchableOpacity, TouchableOpacityComponent } from 'react-native';
 import { connect } from 'react-redux';
 

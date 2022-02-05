@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { Picker } from 'react-native-web';
 import CharNoteViewer from '../viewing/charNoteViewer';
 import MuNoteViewer from '../viewing/muNoteViewer'

@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { Text, View, Button, Pressable, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteCards from './noteCards';
 
 function MuNote(props){

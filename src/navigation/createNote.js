@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View,TextInput } from 'react-native';
-import React, {useState} from 'react';
+import { Text, View,TextInput } from 'react-native';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Picker, TouchableOpacity } from 'react-native-web';
 import { postCharNote, postMuNote } from '../redux/actions';

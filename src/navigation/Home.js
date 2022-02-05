@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import { Text, View, Button, Pressable, TouchableOpacity } from 'react-native';
+import React, {useEffect} from 'react';
+import { Text, View, Button, TouchableOpacity } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import { logoutUser,fetchUser,fetchGames } from '../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { set } from 'react-native-reanimated';
 
 
 

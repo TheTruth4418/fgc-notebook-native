@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { postLogin, postSignup } from '../redux/actions';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { Button } from 'react-native-web';
 function Login(props){
     const [state, setState] = React.useState({
         username : "",
