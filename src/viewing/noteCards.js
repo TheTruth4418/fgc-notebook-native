@@ -2,15 +2,23 @@ import React from "react"
 import { Text, View, TouchableOpacity } from "react-native"
 import BulletPointForm from "../bulletPoints/bulletPointForm"
 import { connect } from "react-redux"
-import { postBulletPoint, deletePoint } from '../redux/actions'
+import { postBulletPoint, deletePoint, postEditedBulletPoint } from '../redux/actions'
+import EditBulletPointForm from '../bulletPoints/editBulletPointForm'
 
 function NoteCards(props){
     const data = props.data
     console.log(data)
+
     const submit = (input) => {
         input.type = props.type
         props.postBulletPoint(input,data)
         //Send the data from the state and the report
+    }
+
+    const submitEdit = (input) => {
+        input.type = props.type
+        console.log(input)
+        props.postEditedBulletPoint(input,data)
     }
 
     let arr = []
@@ -22,6 +30,7 @@ function NoteCards(props){
                 points.push(
                     <View key={point.description}>
                         <Text>{point.description}</Text>
+                        <EditBulletPointForm  point={point} data={data} onSubmit={submitEdit}/>
                         <TouchableOpacity onPress={()=>props.deletePoint(point.id, data)}>
                             <Text>Delete Point</Text>
                         </TouchableOpacity>
@@ -52,7 +61,8 @@ const MSTP = state => {
 const MDTP = dispatch => {
     return {
         postBulletPoint: (pointObj, currentNote) => dispatch(postBulletPoint(pointObj, currentNote)),
-        deletePoint: (pointObj, currentNote) => dispatch(deletePoint(pointObj, currentNote))
+        deletePoint: (pointObj, currentNote) => dispatch(deletePoint(pointObj, currentNote)),
+        postEditedBulletPoint: (pointObj, currentNote) => dispatch(postEditedBulletPoint(pointObj, currentNote))
     }
 
 } 

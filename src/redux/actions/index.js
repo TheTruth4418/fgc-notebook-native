@@ -267,3 +267,25 @@ export const deletePoint = (pointId, currentNote) => {
     })
   }
 }
+
+export const postEditedBulletPoint = (pointObj, currentNote) => {
+  return dispatch => {
+    AsyncStorage.getItem('token')
+    .then((token) => {
+      if (token) {
+        fetch('http://localhost:3000/bullet_points/edit', {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }, body: JSON.stringify({pointObj}),
+            }).then(resp => resp.json())
+              .then(data => {
+                  alert(data.message)
+                  pointObj.type === "char" ?  dispatch(fetchCharNotes(currentNote)) : dispatch(fetchMuNotes(currentNote))
+              })
+      }
+    })
+  }
+}
