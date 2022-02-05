@@ -244,3 +244,26 @@ export const postBulletPoint = (pointObj, currentNote) => {
     })
   }
 }
+
+export const deletePoint = (pointId, currentNote) => {
+  return dispatch => {
+    AsyncStorage.getItem('token')
+    .then((token) => {
+      if(token) {
+        let choice = window.confirm("Are you sure you want to delete this point?")
+        if (choice === true){
+          fetch(`http://localhost:3000/bullet_points/${pointId}/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+            }).then(data => {
+                currentNote.type === "char" ?  dispatch(fetchCharNotes(currentNote)) : dispatch(fetchMuNotes(currentNote))
+              })
+        }
+      }
+    })
+  }
+}

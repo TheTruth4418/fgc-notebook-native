@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { postLogin, postSignup,postBulletPoint } from '../redux/actions';
+import { deletePoint } from '../redux/actions';
 import { Text, View, TextInput, TouchableOpacity, TouchableOpacityComponent } from 'react-native';
 import { connect } from 'react-redux';
 

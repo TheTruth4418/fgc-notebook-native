@@ -1,12 +1,12 @@
 import React from "react"
-import { Text, View } from "react-native"
+import { Text, View, TouchableOpacity } from "react-native"
 import BulletPointForm from "../bulletPoints/bulletPointForm"
 import { connect } from "react-redux"
-import { postBulletPoint } from '../redux/actions'
+import { postBulletPoint, deletePoint } from '../redux/actions'
 
 function NoteCards(props){
     const data = props.data
-
+    console.log(data)
     const submit = (input) => {
         input.type = props.type
         props.postBulletPoint(input,data)
@@ -22,6 +22,9 @@ function NoteCards(props){
                 points.push(
                     <View key={point.description}>
                         <Text>{point.description}</Text>
+                        <TouchableOpacity onPress={()=>props.deletePoint(point.id, data)}>
+                            <Text>Delete Point</Text>
+                        </TouchableOpacity>
                     </View>
                 )
             })
@@ -48,7 +51,8 @@ const MSTP = state => {
 
 const MDTP = dispatch => {
     return {
-        postBulletPoint: (pointObj, currentNote) => dispatch(postBulletPoint(pointObj, currentNote))
+        postBulletPoint: (pointObj, currentNote) => dispatch(postBulletPoint(pointObj, currentNote)),
+        deletePoint: (pointObj, currentNote) => dispatch(deletePoint(pointObj, currentNote))
     }
 
 } 
