@@ -9,7 +9,6 @@ function CharNote(props){
     return (
         <>
             <NoteCards data={props.data} type="char"/>
-            
         </>
     )
 }

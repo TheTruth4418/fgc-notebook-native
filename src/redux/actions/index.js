@@ -1,7 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-// Login/Logout actions
-
   export const fetchUser = () => {
     return dispatch => {
       AsyncStorage.getItem('token')
@@ -53,6 +51,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
             alert(data.message)
           } else {
             AsyncStorage.setItem("token", data.jwt)
+            alert(data.user)
             dispatch({
               type: "LOGIN_USER",
               payload: data.user
@@ -86,8 +85,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
     }
   }
 
-  // Load up Form data for the games
-
   export const fetchGames = () => {
     return dispatch => {
       AsyncStorage.getItem('token')
@@ -118,7 +115,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
     }
   }
 
-  // Character Note Actions
   export const postCharNote = (noteObj) => {
     return (dispatch) => {
       AsyncStorage.getItem('token')
@@ -166,7 +162,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
     }
   }
   
-  // Matchup Note Actions
 
   export const postMuNote = (noteObj) => {
     console.log(noteObj)
@@ -220,8 +215,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
           type: "REFRESH_CURRENT_NOTE"
       }
   }
-
-  //Bullet Point Actions
 
 export const postBulletPoint = (pointObj, currentNote) => {
   return dispatch => {

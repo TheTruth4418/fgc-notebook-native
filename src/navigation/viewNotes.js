@@ -1,7 +1,7 @@
 import { Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import React, {useEffect} from 'react';
-import { Picker } from 'react-native-web';
+import { Picker } from 'react-native';
 import CharNoteViewer from '../viewing/charNoteViewer';
 import MuNoteViewer from '../viewing/muNoteViewer'
 import { fetchCharNotes, fetchMuNotes, refreshCurrentNote } from '../redux/actions';
@@ -87,7 +87,7 @@ function ViewNotes(props){
 
     const renderNotes = () => {
         if(state.form === "Character"){
-            return (<CharNoteViewer data={state} />)
+            return (<CharNoteViewer data={state}/>)
         } else {
             return (<MuNoteViewer data={state}/>)
         }
@@ -108,7 +108,7 @@ function ViewNotes(props){
                 {charsForm()}
             </Picker>
             {state.form === "Matchup" ? muForm() : null }
-            {props.note ? renderNotes() : <Text>Select Character(s) to get started!</Text>}
+            {props.note ? renderNotes():<Text>Select Character(s) to get started!</Text>}
         </View>
     )
 }

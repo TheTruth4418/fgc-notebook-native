@@ -1,7 +1,7 @@
 import { Text, View,TextInput } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Picker, TouchableOpacity } from 'react-native-web';
+import { Picker, TouchableOpacity } from 'react-native';
 import { postCharNote, postMuNote } from '../redux/actions';
 
 function CreateNote(props){

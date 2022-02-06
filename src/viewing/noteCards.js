@@ -48,7 +48,7 @@ function NoteCards(props){
     if(arr.length !=0){
         return(arr)
     } else {
-        return('No notes found for credentials')
+        return(<Text>No notes found for credentials</Text>)
     }
 }
 

@@ -51,26 +51,26 @@ function Home(props){
         })
         return(
             <>
+                <TouchableOpacity onPress={prevGame}>
+                    <Text >PREV. GAME</Text>
+                </TouchableOpacity>
                 <Text>Choose Your Destiny.</Text>
                 {arr[state.game]}
+                <TouchableOpacity onPress={nextGame}>
+                    <Text >NEXT GAME</Text>
+                </TouchableOpacity>
             </>
         )
     }
 
     return (
         <View>
-            {props.currentUser ? <> 
-                <Text>Welcome back {props.currentUser.username}!</Text>
-                {props.games ? <>
-                                    <TouchableOpacity onPress={prevGame} >
-                                        <Text >PREV. GAME</Text>
-                                    </TouchableOpacity>
-                                        {gamesList()}
-                                    <TouchableOpacity onPress={nextGame} >
-                                        <Text >NEXT GAME</Text>
-                                    </TouchableOpacity>
-                               </> : <Text> Loading Games.... </Text>}
-                <Button title="Logout" onPress={props.logoutUser} /> </> : <Login/>}
+            {props.currentUser ?
+             <><Text>Welcome {props.currentUser.username}!</Text>{props.games ? gamesList() :
+              <Text> Loading Games.... </Text>}
+              <Button title="Logout" onPress={props.logoutUser} /></> 
+              :<Login/>}
+            
         </View>
     )
 }
