@@ -7,7 +7,6 @@ import EditBulletPointForm from '../bulletPoints/editBulletPointForm'
 
 function NoteCards(props){
     const data = props.data
-    console.log(data)
 
     const submit = (input) => {
         input.type = props.type
@@ -17,13 +16,11 @@ function NoteCards(props){
 
     const submitEdit = (input) => {
         input.type = props.type
-        console.log(input)
         props.postEditedBulletPoint(input,data)
     }
 
     let arr = []
     props.note.forEach(note => {
-        console.log(note)
         let points = []
         if(note.bullet_points){
             note.bullet_points.forEach(point => {

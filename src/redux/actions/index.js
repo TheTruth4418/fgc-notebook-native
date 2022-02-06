@@ -35,7 +35,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
   })
 
   export const postLogin = (state) => {
-    console.log(state)
     return dispatch => {
       return fetch("http://localhost:3000/login", {
         method: "POST",
@@ -74,7 +73,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       })
         .then(resp => resp.json())
         .then(data => {
-            console.log("Here")
           if (data.message) {
             alert(data.message)
           } else {
@@ -103,7 +101,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
               if (data.message) {
                 AsyncStorage.clear()
               } else {
-                console.log(data)
                 dispatch({
                   type: "FETCH_GAMES",
                   payload: data
@@ -130,7 +127,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
             }).then(resp => resp.json())
               .then(data => {
                   alert(data.message)
-                  console.log(data)
               })
         }
       })
@@ -138,7 +134,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
   }
 
   export const fetchCharNotes = (obj) => {
-    console.log(obj)
     return dispatch => {
       AsyncStorage.getItem('token')
       .then((token) => {
@@ -164,7 +159,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
   
 
   export const postMuNote = (noteObj) => {
-    console.log(noteObj)
+
     return (dispatch) => {
       AsyncStorage.getItem('token')
       .then((token) => {
@@ -179,7 +174,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
             }).then(resp => resp.json())
               .then(data => {
                   alert(data.message)
-                  console.log(data)
               })
         }
       })

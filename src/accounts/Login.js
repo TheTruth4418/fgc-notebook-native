@@ -11,7 +11,6 @@ function Login(props){
     })
 
     const handleUsername = (input) => {
-        console.log(input)
         setState({
             ...state,
             username: input
@@ -19,7 +18,6 @@ function Login(props){
     }
 
     const handlePassword = (input) => {
-        console.log(input)
         setState({
             ...state,
             password: input
@@ -27,7 +25,6 @@ function Login(props){
     }
 
     const handleEmail = (input) => {
-        console.log(input)
         setState({
             ...state,
             email: input
