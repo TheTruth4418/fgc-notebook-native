@@ -9,21 +9,20 @@ function EditBulletPointForm(props){
         render: false,
         id: props.point.id 
     })
-
+//event handler for text
     const handleText= (input) => {
         setState({
             ...state,
             description: input
         })
     }
-
+//Event handler for submitting
     const submit = () => {
         setState({
             ...state,
             render:false
         })
         props.onSubmit(state)
-        //props.postEditedBulletPoint(state,props.data)
     }
 
     const render = () => {

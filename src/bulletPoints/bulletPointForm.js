@@ -2,21 +2,20 @@ import React from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-
 function BulletPointForm(props){
     const [state, setState] = React.useState({
         description: "",
         render: false,
         id: props.noteId 
     })
-
+//Event Handler for the text of bullet point
     const handleText= (input) => {
         setState({
             ...state,
             description: input
         })
     }
-
+//Event handler for submit
     const submit = () => {
         setState({
             ...state,
