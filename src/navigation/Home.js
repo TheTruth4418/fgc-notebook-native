@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Text, View, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import { logoutUser,fetchUser,fetchGames } from '../redux/actions';
@@ -16,25 +16,28 @@ function Home(props){
         let arr = []
         Object.keys(props.games).forEach(game => {
             arr.push(<View key={game}>
-                <Text>{game}</Text>
-                <TouchableOpacity onPress={navToCreation}>
-                    <Text >CREATE NOTES</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={navToViewing} >
-                    <Text >VIEW NOTES</Text>
-                </TouchableOpacity>
+                <Image style={styles.logo}source={require(`../images/logos/${game}.png`)}/>
+                <View style={styles.row}>
+                    <TouchableOpacity onPress={navToCreation}>
+                        <Text >CREATE NOTES</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={navToViewing} >
+                        <Text >VIEW NOTES</Text>
+                    </TouchableOpacity>
+                </View>
             </View>)
         })
         return(
             <>
-                <TouchableOpacity onPress={prevGame}>
-                    <Text >PREV. GAME</Text>
-                </TouchableOpacity>
-                <Text>Choose Your Destiny.</Text>
-                {arr[state.game]}
-                <TouchableOpacity onPress={nextGame}>
-                    <Text >NEXT GAME</Text>
-                </TouchableOpacity>
+                <View style={styles.row}>
+                    <TouchableOpacity onPress={prevGame}>
+                        <Image style={styles.arrow2}source={require(`../images/logos/Arrow.png`)}/>
+                    </TouchableOpacity>
+                    {arr[state.game]}
+                    <TouchableOpacity onPress={nextGame}>
+                        <Image style={styles.arrow}source={require(`../images/logos/Arrow.png`)}/>
+                    </TouchableOpacity>
+                </View>
             </>
         )
     }
@@ -68,7 +71,7 @@ function Home(props){
         state.game === 0 ? setState({ game: Object.keys(props.games).length-1 }) : setState({ game: state.game-1 })
       }
     return (
-        <View>
+        <View style={styles.container}>
             {/* When there is a user, render up the main menu with the games, otherwise render the Login Component */}
             {props.currentUser ?
              <><Text>Welcome {props.currentUser.username}!</Text>{props.games ? gamesList() :
@@ -100,3 +103,32 @@ const MDTP = dispatch => {
 } 
 
 export default connect(MSTP, MDTP)(Home)
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 8,
+        backgroundColor: "aliceblue",
+      },
+    logo: {
+        alignSelf:'center',
+        resizeMode: "stretch",
+        height: 150,
+        width: 300
+    },
+    arrow: {
+        height: 50,
+        width: 50
+    },
+    arrow2: {
+        transform: [
+            {scaleX: "-1"},
+        ],
+        height:50,
+        width:50
+    },
+    row: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+      }
+})
