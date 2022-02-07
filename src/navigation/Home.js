@@ -29,7 +29,7 @@ function Home(props){
 // Utilizing state to select the game depending on the index of the Games array
       const [state, setState] = React.useState({ game : 0 })
 
-//Button used to activate Creation portion of the app
+//Button used to activate Creation portion of the app, pass the Game ID for sending data to the API
       const navToCreation = () => {
         props.navigation.navigate('Create',{
             gameId: state.game,
@@ -37,7 +37,7 @@ function Home(props){
         })
       }
 
-//Button used to activate the Viewing portion of the app
+//Button used to activate the Viewing portion of the app, pass the Game ID for sending data to the API
       const navToViewing = () => {
         props.navigation.navigate('View', {
             gameId: state.game,

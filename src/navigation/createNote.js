@@ -5,9 +5,10 @@ import { Picker, TouchableOpacity } from 'react-native';
 import { postCharNote, postMuNote } from '../redux/actions';
 
 function CreateNote(props){
-    let gameId = props.route.params.gameId
-    let game = Object.keys(props.games)[gameId]
-    const characters = Object.keys(props.games[game])
+    let gameId = props.route.params.gameId  //Set the game Id that I passed in from Home, Will use to get the correct game
+    let game = Object.keys(props.games)[gameId] //Sets the game so that I can submit data to the API
+    const characters = Object.keys(props.games[game]) //Grabs the Characters from the store in order to utilize that data
+
     const [state, setState] = React.useState({
         game: game,
         form: "Character",
@@ -16,6 +17,7 @@ function CreateNote(props){
         title: ""
     });
 
+//Steps through the array of characters and makes a form
     const charsForm = () => {
         let arr = [];
         characters.forEach(char => {
@@ -24,6 +26,7 @@ function CreateNote(props){
         return(arr)
     }
 
+//Switch in between viewing for a specific character or a matchup
     const formSwitcher = () => {
         const modes = ['Character', 'Matchup']
         let switchForms = () => {
@@ -37,31 +40,26 @@ function CreateNote(props){
             </>
         )
     }
-
+//Event handler for the note title
     const handleNote = (input) => {
         setState({
             ...state,
             title: input
         })
     }
-
+//If making a matchup note, renders another form for the Opponent
     const muForm = () => {
         return (
             <>
-                <Picker
-                    selectedValue={state.opponent}
-                    onValueChange={(char, charIndex) =>
-                        setState({
-                            ...state,
-                            opponent: char
-                        })
-                }>
+                <Picker selectedValue={state.opponent}
+                        onValueChange={(char) =>
+                        setState({ ...state, opponent: char }) }>
                 {charsForm()}
             </Picker>
             </>
         )
     }
-
+//Submit handler, using the data from the form, submit the form data to the API
     const handleSubmit = () => {
         state.form === "Character" ? props.postCharNote(state) : props.postMuNote(state)
     }
@@ -70,16 +68,12 @@ function CreateNote(props){
         <View>
             <Text>{`Create mode for ${game}`}</Text>
             {formSwitcher()}
-            <Picker
-                    selectedValue={state.character}
-                    onValueChange={(char, charIndex) =>
-                        setState({
-                            ...state,
-                            character: char
-                        })
-                }>
+            <Picker selectedValue={state.character}
+                    onValueChange={(char) =>
+                    setState({ ...state, character: char}) }>
                 {charsForm()}
             </Picker>
+            {/* Render the form for the opponent if the state of form is Matchup */}
             {state.form === "Matchup" ? muForm() : null }
             <TextInput name ="note" id="note" placeholder="Type Note here!" onChangeText={(value)=>handleNote(value)}/>
             <TouchableOpacity onPress={handleSubmit}>
@@ -88,7 +82,7 @@ function CreateNote(props){
         </View>
     )
 }
-
+//Need the games in order to grab the right game and make the correct form
 const MSTP = state => {
     return {
         games: state.games
