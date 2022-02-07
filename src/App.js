@@ -8,7 +8,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Home from './navigation/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import CreateNote from './navigation/createNote';
-import ViewNotes from './navigation/viewNotes'
+import ViewNotes from './viewing/viewNotes'
 
 const Stack = createStackNavigator();
 

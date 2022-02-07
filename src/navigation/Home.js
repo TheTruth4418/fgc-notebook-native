@@ -25,6 +25,19 @@ function Home(props){
                 </TouchableOpacity>
             </View>)
         })
+        return(
+            <>
+                <TouchableOpacity onPress={prevGame}>
+                    <Text >PREV. GAME</Text>
+                </TouchableOpacity>
+                <Text>Choose Your Destiny.</Text>
+                {arr[state.game]}
+                <TouchableOpacity onPress={nextGame}>
+                    <Text >NEXT GAME</Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
 
 // Utilizing state to select the game depending on the index of the Games array
       const [state, setState] = React.useState({ game : 0 })
@@ -54,22 +67,6 @@ function Home(props){
       const prevGame = () => {
         state.game === 0 ? setState({ game: Object.keys(props.games).length-1 }) : setState({ game: state.game-1 })
       }
-
-        return(
-            <>
-                <TouchableOpacity onPress={prevGame}>
-                    <Text >PREV. GAME</Text>
-                </TouchableOpacity>
-                <Text>Choose Your Destiny.</Text>
-                {/*Render a game depending upon the index in the Games array*/}
-                {arr[state.game]}
-                <TouchableOpacity onPress={nextGame}>
-                    <Text >NEXT GAME</Text>
-                </TouchableOpacity>
-            </>
-        )
-    }
-
     return (
         <View>
             {/* When there is a user, render up the main menu with the games, otherwise render the Login Component */}

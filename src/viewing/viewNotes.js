@@ -2,15 +2,15 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import React, {useEffect} from 'react';
 import { Picker } from 'react-native';
-import CharNoteViewer from '../viewing/charNoteViewer';
-import MuNoteViewer from '../viewing/muNoteViewer'
 import { fetchCharNotes, fetchMuNotes, refreshCurrentNote } from '../redux/actions';
+import NoteCards from './noteCards';
 
 function ViewNotes(props){
-    let gameId = props.route.params.gameId
-    let game = Object.keys(props.games)[gameId]
-    const characters = Object.keys(props.games[game])
+    let gameId = props.route.params.gameId //Set the game Id that I passed in from Home, Will use to get the correct game
+    let game = Object.keys(props.games)[gameId] //Sets the game so that I can submit data to the API
+    const characters = Object.keys(props.games[game]) //Grabs the Characters from the store in order to utilize that data
 
+// Upon rendering makes sure there isnt previous data thats being rendered
     useEffect(() => {
         if(props.note){
             props.refreshCurrentNote();
@@ -24,7 +24,7 @@ function ViewNotes(props){
         opponent: "",
         title: ""
     });;
-
+//Create the form for the characters
     const charsForm = () => {
         let arr = [];
         characters.forEach(char => {
@@ -32,7 +32,7 @@ function ViewNotes(props){
         })
         return(arr)
     }
-
+//Switches the form between Chars and Matchups
     const formSwitcher = () => {
         const modes = ['Character', 'Matchup']
         let switchForms = () => {
@@ -47,14 +47,13 @@ function ViewNotes(props){
             </>
         )
     }
-
+//Form for opponent if we need it
     const muForm = () => {
         return (
             <>
                 <Picker
                     selectedValue={state.opponent}
-                    onValueChange={(char, charIndex) =>
-                        {
+                    onValueChange={(char) => {
                             setState({...state, opponent: char})
                             onOppChange({...state, opponent: char})
                         }
@@ -64,11 +63,11 @@ function ViewNotes(props){
             </>
         )
     }
-
+// Sends API request for a specific matchup
     const muNoteReq = (data) => {
         props.fetchMuNotes(data)
     }
-
+//Handles Character change and sends the API request if conditions are met
     const onCharChange = (data) => {
         if(state.form === "Character"){
             props.fetchCharNotes(data)
@@ -78,18 +77,18 @@ function ViewNotes(props){
             null
         }
     }
-
+//Handles opponent change and sneds API request if conditions are met
     const onOppChange = (data) => {
         if(state.character != ""){
             muNoteReq(data)
         }
     }
-
+// What renders the notes, pass in a type which helps the API request
     const renderNotes = () => {
         if(state.form === "Character"){
-            return (<CharNoteViewer data={state}/>)
+            return (<NoteCards type="char" data={state}/>)
         } else {
-            return (<MuNoteViewer data={state}/>)
+            return (<NoteCards type="mu"data={state}/>)
         }
     }
 
