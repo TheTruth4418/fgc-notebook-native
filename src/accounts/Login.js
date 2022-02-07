@@ -9,7 +9,7 @@ function Login(props){
         email: "",
         form: "Login"
     })
-
+// Event Handlers for the form changes
     const handleUsername = (input) => {
         setState({
             ...state,
@@ -31,6 +31,12 @@ function Login(props){
         })
     }
 
+// Responsible for switching in between Login and Signup forms
+    const form = () => {
+        state.form === "Login" ? setState({...state, form:"Signup"}) : setState({...state, form:"Login"})
+    }
+
+//Evnet handler for submitting the form
     const postForm = () => {
         if(state.form != "Login" && state.form != "Signup"){
             alert("Nice try")
@@ -45,10 +51,6 @@ function Login(props){
         }
     }
 
-    const form = () => {
-        state.form === "Login" ? setState({...state, form:"Signup"}) : setState({...state, form:"Login"})
-    }
-
     return(
         <View>
             <Text>Signup/Login to get Started</Text>
@@ -56,7 +58,7 @@ function Login(props){
             <TouchableOpacity onPress = {form}>
                 <Text>Change</Text>
             </TouchableOpacity>
-
+            {/*Only Render Email whenever the form state is in Signup*/}
             { state.form === "Signup" ? <><Text>Email (Not required for exsisting users)</Text>
             <TextInput name ="email" id="email" placeholder="Email" onChangeText={(value)=>handleEmail(value)}/></> : null}
 

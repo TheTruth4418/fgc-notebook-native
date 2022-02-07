@@ -5,37 +5,13 @@ import { connect } from 'react-redux';
 import { logoutUser,fetchUser,fetchGames } from '../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 function Home(props){
+// Upon Startup, run the fetch user to auto login
     useEffect(() => {
         props.fetchUser();
       }, []);
 
-      const [state, setState] = React.useState({ game : 0 })
-
-      const createPress = () => {
-        props.navigation.navigate('Create',{
-            gameId: state.game,
-            game: props.games[state.game]
-        })
-      }
-
-      const viewPress = () => {
-        props.navigation.navigate('View', {
-            gameId: state.game,
-            game: props.games[state.game]
-        })
-      }
-
-      const nextGame = () => {
-        state.game === Object.keys(props.games).length-1 ? setState({ game: 0 }) : setState({ game: state.game+1 })
-      }
-
-      const prevGame = () => {
-        state.game === 0 ? setState({ game: Object.keys(props.games).length-1 }) : setState({ game: state.game-1 })
-      }
-
+// Grab data from API, put into an array and be gable to scroll thorugh each game in the menu
     const gamesList = () => {
         let arr = []
         Object.keys(props.games).forEach(game => {
@@ -49,12 +25,43 @@ function Home(props){
                 </TouchableOpacity>
             </View>)
         })
+
+// Utilizing state to select the game depending on the index of the Games array
+      const [state, setState] = React.useState({ game : 0 })
+
+//Button used to activate Creation portion of the app
+      const createPress = () => {
+        props.navigation.navigate('Create',{
+            gameId: state.game,
+            game: props.games[state.game]
+        })
+      }
+
+//Button used to activate the Viewing portion of the app
+      const viewPress = () => {
+        props.navigation.navigate('View', {
+            gameId: state.game,
+            game: props.games[state.game]
+        })
+      }
+
+// Toggles the next game in the Games Array
+      const nextGame = () => {
+        state.game === Object.keys(props.games).length-1 ? setState({ game: 0 }) : setState({ game: state.game+1 })
+      }
+      
+//Toggles the previous game in the Gammes Array
+      const prevGame = () => {
+        state.game === 0 ? setState({ game: Object.keys(props.games).length-1 }) : setState({ game: state.game-1 })
+      }
+
         return(
             <>
                 <TouchableOpacity onPress={prevGame}>
                     <Text >PREV. GAME</Text>
                 </TouchableOpacity>
                 <Text>Choose Your Destiny.</Text>
+                {/*Render a game depending upon the index in the Games array*/}
                 {arr[state.game]}
                 <TouchableOpacity onPress={nextGame}>
                     <Text >NEXT GAME</Text>
@@ -65,6 +72,7 @@ function Home(props){
 
     return (
         <View>
+            {/* When there is a user, render up the main menu with the games, otherwise render the Login Component */}
             {props.currentUser ?
              <><Text>Welcome {props.currentUser.username}!</Text>{props.games ? gamesList() :
               <Text> Loading Games.... </Text>}
@@ -74,14 +82,15 @@ function Home(props){
         </View>
     )
 }
-
+/* User prop - controls whether its the main menu or the Login thats being Rendered 
+   Games prop- controls when the function is called to sort the games into data in the Redux store*/
 const MSTP = state => {
     return {
         currentUser: state.user,
         games: state.games
     }
 }
-
+/*Actions to get data needed from the API*/
 const MDTP = dispatch => {
     return {
         logoutUser: () => {
