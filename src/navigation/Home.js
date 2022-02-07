@@ -17,10 +17,10 @@ function Home(props){
         Object.keys(props.games).forEach(game => {
             arr.push(<View key={game}>
                 <Text>{game}</Text>
-                <TouchableOpacity onPress={createPress}>
+                <TouchableOpacity onPress={navToCreation}>
                     <Text >CREATE NOTES</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={viewPress} >
+                <TouchableOpacity onPress={navToViewing} >
                     <Text >VIEW NOTES</Text>
                 </TouchableOpacity>
             </View>)
@@ -30,7 +30,7 @@ function Home(props){
       const [state, setState] = React.useState({ game : 0 })
 
 //Button used to activate Creation portion of the app
-      const createPress = () => {
+      const navToCreation = () => {
         props.navigation.navigate('Create',{
             gameId: state.game,
             game: props.games[state.game]
@@ -38,7 +38,7 @@ function Home(props){
       }
 
 //Button used to activate the Viewing portion of the app
-      const viewPress = () => {
+      const navToViewing = () => {
         props.navigation.navigate('View', {
             gameId: state.game,
             game: props.games[state.game]
