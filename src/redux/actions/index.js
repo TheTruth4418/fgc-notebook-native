@@ -1,11 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {url, url2} from './secret.js' // Vulnerable information
+
+
 
   export const fetchUser = () => {
     return dispatch => {
       AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
-          return fetch("http://localhost:3000/user", {
+          return fetch(`${url2}/user`, {
             method: "GET",
             headers: {
               'Content-Type': 'application/json',
@@ -36,7 +39,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
   export const postLogin = (state) => {
     return dispatch => {
-      return fetch("http://localhost:3000/login", {
+      return fetch(`${url2}/login`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +66,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
   export const postSignup = userObj => {
     return dispatch => {
-      return fetch("http://localhost:3000/signup", {
+      return fetch(`${url2}/signup`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +91,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
-          return fetch("http://localhost:3000/characters", {
+          return fetch(`${url2}/characters`, {
             method: "GET",
             headers: {
               'Content-Type': 'application/json',
@@ -117,7 +120,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
-          return fetch('http://localhost:3000/character_notes/new', {
+          return fetch(`${url2}character_notes/new`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -138,7 +141,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
-          return fetch(`http://localhost:3000/${obj.game}/${obj.character}/notes`, {
+          return fetch(`${url2}/${obj.game}/${obj.character}/notes`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -164,7 +167,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       AsyncStorage.getItem('token')
       .then((token) => {
         if (token) {
-          return fetch('http://localhost:3000/matchup_notes/new', {
+          return fetch(`${url2}/matchup_notes/new`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -185,7 +188,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
       AsyncStorage.getItem('token')
       .then((token) => {
         if(token){
-          fetch(`http://localhost:3000/${data.game}/${data.character}/${data.opponent}/notes`, {
+          fetch(`${url2}/${data.game}/${data.character}/${data.opponent}/notes`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -215,7 +218,7 @@ export const postBulletPoint = (pointObj, currentNote) => {
     AsyncStorage.getItem('token')
     .then((token) => {
       if (token) {
-        fetch('http://localhost:3000/bullet_points/new', {
+        fetch(`${url2}/bullet_points/new`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -239,7 +242,7 @@ export const deletePoint = (pointId, currentNote) => {
       if(token) {
         let choice = window.confirm("Are you sure you want to delete this point?")
         if (choice === true){
-          fetch(`http://localhost:3000/bullet_points/${pointId}/delete`, {
+          fetch(`${url2}/bullet_points/${pointId}/delete`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -260,7 +263,7 @@ export const postEditedBulletPoint = (pointObj, currentNote) => {
     AsyncStorage.getItem('token')
     .then((token) => {
       if (token) {
-        fetch('http://localhost:3000/bullet_points/edit', {
+        fetch(`${url2}/bullet_points/edit`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

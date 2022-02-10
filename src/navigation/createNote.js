@@ -1,4 +1,4 @@
-import { Text, View,TextInput } from 'react-native';
+import { Button,Text, View,TextInput } from 'react-native';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Picker, TouchableOpacity } from 'react-native';
@@ -79,6 +79,7 @@ function CreateNote(props){
             <TouchableOpacity onPress={handleSubmit}>
                 <Text>Submit!</Text>
             </TouchableOpacity>
+            <Button title="Go Back" onPress={() => props.navigation.navigate('Home')} />
         </View>
     )
 }

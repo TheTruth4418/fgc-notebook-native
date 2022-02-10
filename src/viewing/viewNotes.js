@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Button,Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import React, {useEffect} from 'react';
 import { Picker } from 'react-native';
@@ -8,7 +8,7 @@ import NoteCards from './noteCards';
 function ViewNotes(props){
     let gameId = props.route.params.gameId //Set the game Id that I passed in from Home, Will use to get the correct game
     let game = Object.keys(props.games)[gameId] //Sets the game so that I can submit data to the API
-    const characters = Object.keys(props.games[game]) //Grabs the Characters from the store in order to utilize that data
+    const characters = Object.keys(props.games[game]).sort() //Grabs the Characters from the store in order to utilize that data
 
 // Upon rendering makes sure there isnt previous data thats being rendered
     useEffect(() => {
@@ -108,6 +108,7 @@ function ViewNotes(props){
             </Picker>
             {state.form === "Matchup" ? muForm() : null }
             {props.note ? renderNotes():<Text>Select Character(s) to get started!</Text>}
+            <Button title="Go Back" onPress={() =>props.navigation.navigate('Home')} />
         </View>
     )
 }

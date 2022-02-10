@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
-import { Text, View, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Dimensions,Text, View, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Login from '../accounts/Login';
 import { connect } from 'react-redux';
 import { logoutUser,fetchUser,fetchGames } from '../redux/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {images} from '../imageRendering'
 
 function Home(props){
+
 // Upon Startup, run the fetch user to auto login
     useEffect(() => {
         props.fetchUser();
@@ -16,7 +18,7 @@ function Home(props){
         let arr = []
         Object.keys(props.games).forEach(game => {
             arr.push(<View key={game}>
-                <Image style={styles.logo}source={require(`../images/logos/${game}.png`)}/>
+                <Image style={styles.logo} source={images[game]['logo']}/>
                 <View style={styles.row}>
                     <TouchableOpacity onPress={navToCreation}>
                         <Text >CREATE NOTES</Text>
@@ -107,28 +109,33 @@ export default connect(MSTP, MDTP)(Home)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 8,
-        backgroundColor: "aliceblue",
+        flexDirection: "column",
+        backgroundColor: "gray",
+        justifyContent: 'center',
+        alignItems:'center',
+        padding: 20
       },
     logo: {
         alignSelf:'center',
         resizeMode: "stretch",
-        height: 150,
-        width: 300
+        height: '40%',
+        width: '100%'
     },
     arrow: {
         height: 50,
+        resizeMode: 'contain',
         width: 50
     },
     arrow2: {
         transform: [
-            {scaleX: "-1"},
+            {scaleX: -1},
         ],
         height:50,
         width:50
     },
     row: {
         flexDirection: "row",
+        alignItems:'center',
         flexWrap: "wrap",
       }
 })
